@@ -1,0 +1,21 @@
+name: ${rootProject.name}
+main: ${group}
+version: ${version}
+description: 一个方便老子开服的插件
+authors: [FullIdle]
+depend:
+  - NyEconomy
+  - PlayerPoints
+  - Vault
+  - FICore
+commands:
+  fipokestore:
+    description: Main Cmd
+    aliases: [fipstore]
+permissions:
+  fipokestore.reload:
+    default: op
+  fipokestore.open:
+    default: true
+  fipokestore.applylist:
+    default: true

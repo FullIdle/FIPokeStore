@@ -1,0 +1,19 @@
+inputScreen:
+  title: "&3宝可梦商店"
+  text: "&r输入你想要购买的宝可梦名字"
+gui:
+  title: "&7购买{pokemon}"
+  pokeInfo:
+    name: "&3{pokemon}"
+    lore:
+      - "&7支付类型: &a{paytype}"
+      - "&7价格: {value}"
+  confirm:
+    name: "&a确认"
+    lore:
+      - "&a确认购买,精灵将会添加到你背包或者PC"
+      - "&c如果没有设置价格,点击后会申请价格"
+payTypeFormat:
+  none: "&6未设置"
+  points: "&3点券"
+  vault: "&6金币"
