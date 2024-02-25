@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static me.fullidle.fipokestore.Main.*;
+
 public class CMD implements CommandExecutor, TabCompleter {
     public static final ArrayList<String> subCmd = Lists.newArrayList(
             "reload", "help", "open", "applylist"
@@ -30,8 +32,8 @@ public class CMD implements CommandExecutor, TabCompleter {
                         break;
                     }
                     case "reload": {
-                        Main.main.reloadConfig();
-                        sender.sendMessage("§aConfiguration has been reloaded!");
+                        main.reloadConfig();
+                        sender.sendMessage(getConfigColorMsg("Msg.reload"));
                         return false;
                     }
                     case "open": {
@@ -62,9 +64,7 @@ public class CMD implements CommandExecutor, TabCompleter {
                 }
             }
         }
-        ArrayList<String> clone = (ArrayList<String>) subCmd.clone();
-        clone.add("字面意思Help我懒得写");
-        sender.sendMessage(clone.toArray(new String[0]));
+        sender.sendMessage(main.getConfig().getStringList("Msg.help").toArray(new String[0]));
         return false;
     }
     @Override

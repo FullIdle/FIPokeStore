@@ -136,14 +136,14 @@ public class PokeInfoGui extends ListenerInvHolder {
                     }
 
                     //提示
-                    player.sendMessage("§cPayment type and payment fee not set!§7(Application has been added!)");
+                    player.sendMessage(getConfigColorMsg("Msg.noPriceSet"));
                     return;
                 }
                 {
                     //判断支付格式是否正确
                     if (!getAllMoneyTypeList().contains(payType)) {
                         player.closeInventory();
-                        player.sendMessage("§cCurrency type does not exist!§7(Please contact the server owner!)");
+                        player.sendMessage(getConfigColorMsg("Msg.currencyNotExist"));
                         return;
                     }
                 }
@@ -152,13 +152,13 @@ public class PokeInfoGui extends ListenerInvHolder {
                 double look = getBalance(payType, player);
                 if (look < v){
                     player.closeInventory();
-                    player.sendMessage("§cYou don't have enough currency");
+                    player.sendMessage(getConfigColorMsg("Msg.notEnoughMoney"));
                     return;
                 }
                 withdraw(payType,player,v);
             }
             //给与
-            player.sendMessage("§aPurchase successful!");
+            player.sendMessage(getConfigColorMsg("Msg.purchaseSuccessful"));
             pps.add(pokemon);
             player.closeInventory();
         });
@@ -175,13 +175,13 @@ public class PokeInfoGui extends ListenerInvHolder {
 
     public static String papi(String str,Player player,Pokemon pokemon){
         PokeData.PokeInfo pokeInfo = pokeData.getPokemonPokeInfo(pokemon);
-        String payType = main.getConfig().getString("payTypeFormat." + pokeInfo.getPayType());
+        String payType = getConfigColorMsg("payTypeFormat." + pokeInfo.getPayType());
         String v = pokeInfo.getValue() == -1? main.getConfig().getString("payTypeFormat.none")
                 : pokeInfo.getValue()+"";
         if (payType == null) payType = pokeInfo.getPayType();
         return PlaceholderAPI.setPlaceholders(player,str).replace("{pokemon}",pokemon.getLocalizedName()).
                 replace("{value}", v).
-                replace("{paytype}",payType).replace("&","§");
+                replace("{paytype}",payType);
     }
 
     public static double getBalance(String payType,Player player){

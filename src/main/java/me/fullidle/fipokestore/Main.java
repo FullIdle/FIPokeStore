@@ -80,8 +80,8 @@ public class Main extends JavaPlugin {
         {
             //load InputScreen
             searchInput = DialogueInputScreen.builder().
-                    setTitle(getConfig().getString("inputScreen.title").replace("&","§")).
-                    setText(getConfig().getString("inputScreen.text").replace("&","§"));
+                    setTitle(getConfigColorMsg("inputScreen.title")).
+                    setText(getConfigColorMsg("inputScreen.text"));
             payTypeInput = DialogueInputScreen.builder().
                     setTitle("§3PayType").
                     setText("§6Input §3PayType");
@@ -96,5 +96,14 @@ public class Main extends JavaPlugin {
         moneyList.add("points");
         moneyList.add("vault");
         return moneyList;
+    }
+
+    public static String getColorMsg(String msg){
+        return msg.replace("&","§");
+    }
+    public static String getConfigColorMsg(String key){
+        String s = main.getConfig().getString(key);
+        if (s == null) return null;
+        return getColorMsg(s);
     }
 }

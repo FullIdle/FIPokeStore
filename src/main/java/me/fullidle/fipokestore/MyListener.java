@@ -75,7 +75,7 @@ public class MyListener implements Listener {
                     //获取精灵Species
                     EnumSpecies species = EnumSpecies.getFromNameAnyCase(inputText);
                     if (species == null) {
-                        player.sendMessage("§cIncorrect name!");
+                        player.sendMessage(getConfigColorMsg("Msg.incorrectName"));
                         return;
                     }
                     //检查是否能买 OP跳过可强行打开
@@ -98,7 +98,7 @@ public class MyListener implements Listener {
                 case PAYTYPE: {
                     //输入支付格式
                     if (!getAllMoneyTypeList().contains(inputText)) {
-                        player.sendMessage("§cCurrency type does not exist!");
+                        player.sendMessage(getConfigColorMsg("Msg.currencyNotExist"));
                         inputTypeMap.put(player, EnumInputType.PAYTYPE);
                         Bukkit.getScheduler().runTask(main, () -> {
                             payTypeInput.sendTo(e.getPlayer());
@@ -122,13 +122,13 @@ public class MyListener implements Listener {
                         key.setPayType(type);
                         key.setValue(value);
                         pokeData.setPokemonPokeInfo(key.getSpecies(), key);
-                        player.sendMessage("§aEditing successful!");
+                        player.sendMessage(getConfigColorMsg("Msg.editedSuccessfully"));
                         Inventory inv = new PokeInfoGui(player, key.getSpecies()).getInventory();
                         Bukkit.getScheduler().runTask(main, () -> {
                             player.openInventory(inv);
                         });
                     } catch (NumberFormatException ex) {
-                        player.sendMessage("§cThe input is not a number!");
+                        player.sendMessage(getConfigColorMsg("Msg.enterNonNumber"));
                         e.setCanceled(true);
                     }
                     return;

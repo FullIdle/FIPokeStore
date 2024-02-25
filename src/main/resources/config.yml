@@ -17,3 +17,17 @@ payTypeFormat:
   none: "&6未设置"
   points: "&3点券"
   vault: "&6金币"
+Msg:
+  help:
+    - 'help'
+    - 'reload'
+    - 'open'
+    - 'applylist'
+  reload: '&a配置已经重载!'
+  incorrectName: '&c错误名字!'
+  purchaseSuccessful: '&a购买成功!'
+  notEnoughMoney: "&c您没有足够的货币!"
+  currencyNotExist: "&c货币类型不存在!"
+  noPriceSet: "&c付款类型和付款费用未设置！§7(申请已添加!)"
+  enterNonNumber: "&c输入的不是数字!"
+  editedSuccessfully: "&a编辑成功!"
