@@ -49,6 +49,9 @@ public class ApplyListGui extends ListenerInvHolder {
                 for (int i = 0; i < pageInv.length; i++) {
                     Inventory inv = Bukkit.createInventory(null, 45);
                     for (int i1 = 0; i1 < 45; i1++) {
+                        if (photoList.size() == x) {
+                            break;
+                        }
                         inv.addItem(photoList.get(x));
                         x++;
                     }
