@@ -1,6 +1,13 @@
-inputScreen:
-  title: "&3宝可梦商店"
-  text: "&r输入你想要购买的宝可梦名字"
+screen:
+  search:
+    title: "&3宝可梦商店"
+    text: "&r输入你想要购买的宝可梦名字"
+  payType:
+    title: "&3支付类型"
+    text: "&6请输入&3支付类型"
+  payValue:
+    title: "&3支付价格"
+    text: "&6请输入&e支付价格"
 gui:
   title: "&7购买{pokemon}"
   pokeInfo:
@@ -24,6 +31,7 @@ Msg:
     - 'open'
     - 'applylist'
   reload: '&a配置已经重载!'
+  pokeCanTBuy: '&c该精灵不能购买!'
   incorrectName: '&c错误名字!'
   purchaseSuccessful: '&a购买成功!'
   notEnoughMoney: "&c您没有足够的货币!"

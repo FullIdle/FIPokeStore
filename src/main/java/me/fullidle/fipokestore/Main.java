@@ -80,14 +80,14 @@ public class Main extends JavaPlugin {
         {
             //load InputScreen
             searchInput = DialogueInputScreen.builder().
-                    setTitle(getConfigColorMsg("inputScreen.title")).
-                    setText(getConfigColorMsg("inputScreen.text"));
+                    setTitle(getConfigColorMsg("screen.search.title")).
+                    setText(getConfigColorMsg("screen.search.text"));
             payTypeInput = DialogueInputScreen.builder().
-                    setTitle("§3PayType").
-                    setText("§6Input §3PayType");
+                    setTitle(getConfigColorMsg("screen.payType.title")).
+                    setText(getConfigColorMsg("screen.payType.text"));
             payValueInput = DialogueInputScreen.builder().
-                    setTitle("§3PayValue").
-                    setText("§6Input §ePayValue");
+                    setTitle(getConfigColorMsg("screen.payValue.title")).
+                    setText(getConfigColorMsg("screen.payValue.text"));
         }
     }
 

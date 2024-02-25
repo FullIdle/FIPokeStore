@@ -175,13 +175,13 @@ public class PokeInfoGui extends ListenerInvHolder {
 
     public static String papi(String str,Player player,Pokemon pokemon){
         PokeData.PokeInfo pokeInfo = pokeData.getPokemonPokeInfo(pokemon);
-        String payType = getConfigColorMsg("payTypeFormat." + pokeInfo.getPayType());
+        String payType = main.getConfig().getString("payTypeFormat." + pokeInfo.getPayType());
         String v = pokeInfo.getValue() == -1? main.getConfig().getString("payTypeFormat.none")
                 : pokeInfo.getValue()+"";
         if (payType == null) payType = pokeInfo.getPayType();
-        return PlaceholderAPI.setPlaceholders(player,str).replace("{pokemon}",pokemon.getLocalizedName()).
+        return getColorMsg(PlaceholderAPI.setPlaceholders(player,str).replace("{pokemon}",pokemon.getLocalizedName()).
                 replace("{value}", v).
-                replace("{paytype}",payType);
+                replace("{paytype}",payType));
     }
 
     public static double getBalance(String payType,Player player){

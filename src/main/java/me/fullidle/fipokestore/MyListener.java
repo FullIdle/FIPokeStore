@@ -83,7 +83,7 @@ public class MyListener implements Listener {
                         PokeData.PokeInfo value = pokeData.getPokemonPokeInfo(species);
                         if (!value.isCanBuy()) {
                             //提示不可购买!
-                            player.sendMessage("§cPoke " + species.getLocalizedName() + " Not available for purchase!");
+                            player.sendMessage(getConfigColorMsg("Msg.pokeCanTBuy"));
                             return;
                         }
                     }
