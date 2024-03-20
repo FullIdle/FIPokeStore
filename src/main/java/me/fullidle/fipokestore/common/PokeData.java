@@ -22,7 +22,7 @@ public class PokeData {
         return getPokemonPokeInfo(pokemon.getSpecies());
     }
     public PokeInfo getPokemonPokeInfo(EnumSpecies species){
-        String name = species.getLocalizedName();
+        String name = species.name;
         String payType = pokeData.getConfiguration().getString(name + ".payType");
         double v = pokeData.getConfiguration().getDouble(name + ".value");
         boolean c = pokeData.getConfiguration().getBoolean(name + ".canBuy",true);
@@ -39,7 +39,7 @@ public class PokeData {
         return setPokemonPokeInfo(pokemon.getSpecies(), pokeInfo);
     }
     public PokeInfo setPokemonPokeInfo(EnumSpecies species, PokeInfo pokeInfo){
-        String name = species.getLocalizedName();
+        String name = species.name;
         PokeInfo oldValue = getPokemonPokeInfo(species);
         pokeData.getConfiguration().set(name+".payType", pokeInfo.payType);
         pokeData.getConfiguration().set(name+".value", pokeInfo.value);

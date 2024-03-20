@@ -1,15 +1,17 @@
 plugins {
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
     id 'java'
 }
 
 group = 'me.fullidle.fipokestore.Main'
-version = '1.0'
+version = '1.1-SNAPSHOT'
 
 repositories {
     mavenCentral()
     mavenLocal()
     maven {url 'https://raw.github.com/FullIdle/maven-repository/main/'}
     maven {url 'https://repo.extendedclip.com/content/repositories/placeholderapi/'}
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
@@ -21,6 +23,7 @@ dependencies {
     compileOnly 'me.clip:placeholderapi:2.11.5'
     compileOnly fileTree{'libs'}
 
+    implementation 'com.github.Towdium:PinIn:1.6.0'
 
     compileOnly 'org.projectlombok:lombok:1.18.28'
     annotationProcessor 'org.projectlombok:lombok:1.18.28'
@@ -39,4 +42,9 @@ tasks.withType(JavaCompile){
 processResources {
     setFilteringCharset("UTF-8")
     expand project.properties
+}
+
+shadowJar {
+    archiveBaseName.set(rootProject.name)
+    archiveVersion.set(version)
 }

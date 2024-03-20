@@ -39,7 +39,7 @@ public class CMD implements CommandExecutor, TabCompleter {
                     case "open": {
                         if (!(sender instanceof Player)) {
                             sender.sendMessage("§cYou are not a player and cannot use this command!");
-                            break;
+                            return false;
                         }
                         Player player = (Player) sender;
                         {

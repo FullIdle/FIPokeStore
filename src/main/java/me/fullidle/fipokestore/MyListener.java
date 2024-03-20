@@ -7,6 +7,7 @@ import me.fullidle.fipokestore.common.Pair;
 import me.fullidle.fipokestore.common.PokeData;
 import me.fullidle.fipokestore.enums.EnumInputType;
 import me.fullidle.fipokestore.gui.ApplyListGui;
+import me.fullidle.fipokestore.gui.FuzzySelectionGui;
 import me.fullidle.fipokestore.gui.PokeInfoGui;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;
@@ -20,6 +21,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.Inventory;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -73,22 +75,22 @@ public class MyListener implements Listener {
                 case SEARCH: {
                     //搜索
                     //获取精灵Species
-                    EnumSpecies species = EnumSpecies.getFromNameAnyCase(inputText);
-                    if (species == null) {
+                    ArrayList<EnumSpecies> list = new ArrayList<>();
+                    String s1 = inputText.toLowerCase();
+                    for (String s : getAllIndexSpec()) {
+                        if (pinIn.contains(s,s1)) {
+                            EnumSpecies es = EnumSpecies.getFromNameAnyCase(s);
+                            if (!list.contains(es)) {
+                                list.add(es);
+                            }
+                        }
+                    }
+                    if (list.isEmpty()){
                         player.sendMessage(getConfigColorMsg("Msg.incorrectName"));
                         return;
                     }
-                    //检查是否能买 OP跳过可强行打开
-                    if (!player.isOp()) {
-                        PokeData.PokeInfo value = pokeData.getPokemonPokeInfo(species);
-                        if (!value.isCanBuy()) {
-                            //提示不可购买!
-                            player.sendMessage(getConfigColorMsg("Msg.pokeCanTBuy"));
-                            return;
-                        }
-                    }
                     //打开GUI
-                    PokeInfoGui gui = new PokeInfoGui(player, species);
+                    FuzzySelectionGui gui = new FuzzySelectionGui(player, list.toArray(new EnumSpecies[0]));
                     Bukkit.getScheduler().runTask(main, () -> {
                         Main.inputCache.put(player, inputText);
                         player.openInventory(gui.getInventory());

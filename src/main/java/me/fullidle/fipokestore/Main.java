@@ -1,11 +1,20 @@
 package me.fullidle.fipokestore;
 
+import com.google.common.base.Enums;
+import com.google.common.base.Functions;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Iterables;
 import com.mc9y.nyeconomy.api.NyEconomyAPI;
 import com.pixelmonmod.pixelmon.api.dialogue.DialogueInputScreen;
 import com.pixelmonmod.pixelmon.enums.EnumSpecies;
+import com.pixelmonmod.pixelmon.util.ITranslatable;
+import lombok.Getter;
 import me.fullidle.ficore.ficore.common.api.util.FileUtil;
 import me.fullidle.fipokestore.common.PokeData;
+import me.towdium.pinin.Keyboard;
+import me.towdium.pinin.PinIn;
 import net.milkbowl.vault.economy.Economy;
+import net.minecraft.util.text.translation.I18n;
 import org.black_ixx.playerpoints.PlayerPoints;
 import org.black_ixx.playerpoints.PlayerPointsAPI;
 import org.bukkit.Bukkit;
@@ -14,10 +23,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Main extends JavaPlugin {
@@ -31,6 +37,25 @@ public class Main extends JavaPlugin {
     public static DialogueInputScreen.Builder searchInput;
     public static DialogueInputScreen.Builder payTypeInput;
     public static DialogueInputScreen.Builder payValueInput;
+    public static final PinIn pinIn;
+    @Getter
+    private static final ArrayList<String> allIndexSpec = new ArrayList<>();
+    static {
+        pinIn = new PinIn();
+        pinIn.config().fCh2C(true).commit();
+        pinIn.config().fZh2Z(true).commit();
+        pinIn.config().fSh2S(true).commit();
+        pinIn.config().fAng2An(true).commit();
+        pinIn.config().fEng2En(true).commit();
+        pinIn.config().fIng2In(true).commit();
+        pinIn.config().accelerate(true).commit();
+        pinIn.config().keyboard(Keyboard.QUANPIN).commit();
+
+        for (EnumSpecies value : EnumSpecies.values()) {
+            allIndexSpec.add(value.getLocalizedName());
+            allIndexSpec.add(value.name.toLowerCase());
+        }
+    }
 
     @Override
     public void onEnable() {

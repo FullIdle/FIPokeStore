@@ -16,6 +16,7 @@ import me.fullidle.fipokestore.common.PokeData;
 import net.minecraft.entity.player.EntityPlayerMP;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
@@ -46,24 +47,19 @@ public class PokeInfoGui extends ListenerInvHolder {
         this.player = player;
         this.inventory = Bukkit.createInventory(this,
                 36,
-                papi(main.getConfig().getString("gui.title"))
+                papi(main.getConfig().getString("gui.title"),player,pokemon)
         );
         {
             //宝可梦图片
-            ItemStack item = CraftItemStack.asBukkitCopy(((net.minecraft.server.v1_12_R1.ItemStack) (Object) ItemPixelmonSprite.getPhoto(pokemon)));
-            ItemMeta meta = item.getItemMeta();
-            meta.setDisplayName(papi(main.getConfig().getString("gui.pokeInfo.name")));
-            List<String> lore = main.getConfig().getStringList("gui.pokeInfo.lore").stream().map(this::papi).collect(Collectors.toList());
-            meta.setLore(lore);
-            item.setItemMeta(meta);
-            this.inventory.setItem(13,item);
+            this.inventory.setItem(13,getPhotoItem(pokemon,player));
         }
         {
             //确认购买
             confirm = new ItemStack(Material.STAINED_GLASS_PANE,1,(short)13);
             ItemMeta meta = confirm.getItemMeta();
-            meta.setDisplayName(papi(main.getConfig().getString("gui.confirm.name")));
-            List<String> lore = main.getConfig().getStringList("gui.confirm.lore").stream().map(this::papi).collect(Collectors.toList());
+            meta.setDisplayName(papi(main.getConfig().getString("gui.confirm.name"),player,pokemon));
+            List<String> lore = main.getConfig().getStringList("gui.confirm.lore").stream().map(it->papi(it,player,pokemon)).
+                    collect(Collectors.toList());
             meta.setLore(lore);
             confirm.setItemMeta(meta);
             this.inventory.setItem(31,confirm);
@@ -164,16 +160,13 @@ public class PokeInfoGui extends ListenerInvHolder {
         });
     }
 
-    public String papi(String str){
-        return papi(str,player,pokemon);
-    }
 
     @Override
     public Inventory getInventory() {
         return inventory;
     }
 
-    public static String papi(String str,Player player,Pokemon pokemon){
+    public static String papi(String str,OfflinePlayer player,Pokemon pokemon){
         PokeData.PokeInfo pokeInfo = pokeData.getPokemonPokeInfo(pokemon);
         String payType = main.getConfig().getString("payTypeFormat." + pokeInfo.getPayType());
         String v = pokeInfo.getValue() == -1? main.getConfig().getString("payTypeFormat.none")
@@ -211,5 +204,15 @@ public class PokeInfoGui extends ListenerInvHolder {
                 nyeApi.withdraw(payType,player.getName(), (int) value);
             }
         }
+    }
+
+    public static ItemStack getPhotoItem(Pokemon pokemon, OfflinePlayer player){
+        ItemStack item = CraftItemStack.asBukkitCopy(((net.minecraft.server.v1_12_R1.ItemStack) (Object) ItemPixelmonSprite.getPhoto(pokemon)));
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName(papi(main.getConfig().getString("gui.pokeInfo.name"),player,pokemon));
+        List<String> lore = main.getConfig().getStringList("gui.pokeInfo.lore").stream().map(it->papi(it,player,pokemon)).collect(Collectors.toList());
+        meta.setLore(lore);
+        item.setItemMeta(meta);
+        return item;
     }
 }

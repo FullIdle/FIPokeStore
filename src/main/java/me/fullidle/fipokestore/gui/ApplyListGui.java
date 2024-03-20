@@ -21,7 +21,7 @@ import static me.fullidle.fipokestore.Main.main;
 import static me.fullidle.fipokestore.Main.pokeData;
 
 @Getter
-public class ApplyListGui extends ListenerInvHolder {
+public class ApplyListGui extends MultiPageInv {
     private final Inventory inventory;
     private final Map<ItemStack, PokeData.PokeInfo> itemStackPokeInfoMap = new HashMap<>();
     private final Inventory[] pageInv;
@@ -42,36 +42,17 @@ public class ApplyListGui extends ListenerInvHolder {
                 }
             }
             //分页
-            pageInv = new Inventory[photoList.size() > 54 ?
-                    ((photoList.size() / 45) + (photoList.size() % 45 > 0 ? 1 : 0)) : 1];
-            if (pageInv.length > 1){
-                int x = 0;
-                for (int i = 0; i < pageInv.length; i++) {
-                    Inventory inv = Bukkit.createInventory(null, 45);
-                    for (int i1 = 0; i1 < 45; i1++) {
-                        if (photoList.size() == x) {
-                            break;
-                        }
-                        inv.addItem(photoList.get(x));
-                        x++;
-                    }
-                    pageInv[i] = inv;
-                }
-                {
-                    //翻页控制台 下页 上页
-                    ItemStack item = new ItemStack(Material.ARROW);
-                    ItemMeta meta = item.getItemMeta();
-                    meta.setDisplayName("§3PreviousPage");
-                    item.setItemMeta(meta);
-                    inventory.setItem(47,item);
-                    meta.setDisplayName("§3NextPage");
-                    item.setItemMeta(meta);
-                    inventory.setItem(51,item);
-                }
-            }else{
-                Inventory inv = Bukkit.createInventory(null, 54);
-                inv.addItem(photoList.toArray(new ItemStack[0]));
-                pageInv[0] = inv;
+            pageInv = pagination(45,photoList);
+            if (pageInv.length > 1) {
+                //翻页控制台 下页 上页
+                ItemStack item = new ItemStack(Material.ARROW);
+                ItemMeta meta = item.getItemMeta();
+                meta.setDisplayName("§3PreviousPage");
+                item.setItemMeta(meta);
+                inventory.setItem(47,item);
+                meta.setDisplayName("§3NextPage");
+                item.setItemMeta(meta);
+                inventory.setItem(51,item);
             }
             //修改页面
             changePage(0);
